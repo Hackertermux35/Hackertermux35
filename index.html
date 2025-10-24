@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberVPS | Soluciones Hacker para Telecomunicaciones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tus estilos existentes aquí... */
+        
+        /* Nuevos estilos para la sección de seguridad */
+        .security-alert {
+            background-color: rgba(255, 7, 58, 0.1);
+            border: 1px solid var(--neon-red);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .security-alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 7, 58, 0.1), transparent);
+            animation: security-scan 3s infinite;
+        }
+        
+        @keyframes security-scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .location-data {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--neon-blue);
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .location-item {
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .location-label {
+            color: var(--neon-blue);
+        }
+        
+        .location-value {
+            color: var(--neon-green);
+        }
+        
+        .vpn-warning {
+            color: var(--neon-red);
+            animation: blink-warning 1s infinite;
+        }
+        
+        @keyframes blink-warning {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .security-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 0;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+        }
+        
+        .status-secure {
+            background-color: rgba(15, 255, 80, 0.2);
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+        }
+        
+        .status-warning {
+            background-color: rgba(255, 254, 10, 0.2);
+            color: var(--neon-yellow);
+            border: 1px solid var(--neon-yellow);
+            animation: pulse-warning 2s infinite;
+        }
+        
+        .status-danger {
+            background-color: rgba(255, 7, 58, 0.2);
+            color: var(--neon-red);
+            border: 1px solid var(--neon-red);
+            animation: pulse-danger 1s infinite;
+        }
+        
+        @keyframes pulse-warning {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 254, 10, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(255, 254, 10, 0.8); }
+        }
+        
+        @keyframes pulse-danger {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 7, 58, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(255, 7, 58, 0.8); }
+        }
+        
+        .hidden-field {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Tu código HTML existente aquí... -->
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contacto</h2>
+                <p>¿Necesitas una solución personalizada? Contáctanos por WhatsApp</p>
+            </div>
+            
+            <!-- Alerta de seguridad -->
+            <div class="security-alert">
+                <h3><i class="fas fa-shield-alt"></i> SISTEMA DE SEGURIDAD ACTIVADO</h3>
+                <p>Se está monitoreando la ubicación y datos de conexión para prevenir fraudes y ataques.</p>
+                <div id="securityStatus" class="security-status status-secure">
+                    <i class="fas fa-check-circle"></i> SEGURO
+                </div>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Información de Contacto</h3>
+                    <p><i class="fab fa-whatsapp" style="color: #25D366;"></i> WhatsApp: +52 7823981639</p>
+                    <p><i class="fas fa-globe"></i> Servicios disponibles globalmente</p>
+                    <p><i class="fas fa-clock"></i> Soporte 24/7/365</p>
+                    <p><i class="fas fa-headset"></i> Asistencia técnica especializada</p>
+                    
+                    <!-- Datos de ubicación -->
+                    <div class="location-data" id="locationData">
+                        <h4><i class="fas fa-map-marker-alt"></i> DATOS DE CONEXIÓN</h4>
+                        <div class="location-item">
+                            <span class="location-label">IP:</span>
+                            <span class="location-value" id="ipAddress">Cargando...</span>
+                        </div>
+                        <div class="location-item">
+                            <span class="location-label">País:</span>
+                            <span class="location-value" id="country">Cargando...</span>
+                        </div>
+                        <div class="location-item">
+                            <span class="location-label">Región:</span>
+                            <span class="location-value" id="region">Cargando...</span>
+                        </div>
+                        <div class="location-item">
+                            <span class="location-label">Ciudad:</span>
+                            <span class="location-value" id="city">Cargando...</span>
+                        </div>
+                        <div class="location-item">
+                            <span class="location-label">Proveedor:</span>
+                            <span class="location-value" id="isp">Cargando...</span>
+                        </div>
+                        <div class="location-item">
+                            <span class="location-label">VPN/Proxy:</span>
+                            <span class="location-value" id="vpnStatus">Verificando...</span>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 20px; color: var(--neon-green);">
+                        <i class="fas fa-info-circle"></i> Todos los pedidos se gestionan directamente por WhatsApp
+                    </p>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Solicitar por WhatsApp</h3>
+                    <form id="whatsappForm">
+                        <!-- Campos ocultos para datos de ubicación -->
+                        <input type="hidden" id="hiddenIp" name="ip">
+                        <input type="hidden" id="hiddenCountry" name="country">
+                        <input type="hidden" id="hiddenRegion" name="region">
+                        <input type="hidden" id="hiddenCity" name="city">
+                        <input type="hidden" id="hiddenIsp" name="isp">
+                        <input type="hidden" id="hiddenVpn" name="vpn">
+                        <input type="hidden" id="hiddenCoordinates" name="coordinates">
+                        <input type="hidden" id="hiddenUserAgent" name="user_agent">
+                        <input type="hidden" id="hiddenTimezone" name="timezone">
+                        
+                        <div class="form-group terminal-input">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" placeholder="Ingresa tu nombre" required>
+                        </div>
+                        <div class="form-group terminal-input">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Ingresa tu email" required>
+                        </div>
+                        <div class="form-group terminal-input">
+                            <label for="company">Empresa</label>
+                            <input type="text" id="company" placeholder="Nombre de tu empresa">
+                        </div>
+                        <div class="form-group terminal-input">
+                            <label for="carrier">Operadora de interés</label>
+                            <select id="carrier" required>
+                                <option value="">Selecciona una opción</option>
+                                <option value="movistar">Movistar</option>
+                                <option value="telcel">Telcel</option>
+                                <option value="att">AT&T</option>
+                                <option value="oxxocel">Oxxocel</option>
+                                <option value="bait">Bait</option>
+                                <option value="otra">Otra</option>
+                            </select>
+                        </div>
+                        <div class="form-group terminal-input">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" rows="5" placeholder="Describe tu solicitud o requerimientos" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="security-alert" style="margin-bottom: 1rem;">
+                                <p><i class="fas fa-envelope"></i> Los datos de ubicación se enviarán automáticamente a: <strong>almenos855@gmail.com</strong></p>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i> Enviar con Datos de Seguridad
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Función para obtener datos de geolocalización
+        async function getLocationData() {
+            try {
+                // Obtener IP pública
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                const ip = ipData.ip;
+                
+                // Obtener datos de geolocalización
+                const geoResponse = await fetch(`https://ipapi.co/${ip}/json/`);
+                const geoData = await geoResponse.json();
+                
+                // Detectar VPN/Proxy (usando múltiples servicios para mayor precisión)
+                const vpnCheck1 = await checkVPN(ip);
+                const vpnCheck2 = await checkVPNSecondary(ip);
+                
+                const isVPN = vpnCheck1 || vpnCheck2;
+                
+                // Actualizar interfaz
+                document.getElementById('ipAddress').textContent = ip;
+                document.getElementById('country').textContent = geoData.country_name || 'Desconocido';
+                document.getElementById('region').textContent = geoData.region || 'Desconocido';
+                document.getElementById('city').textContent = geoData.city || 'Desconocido';
+                document.getElementById('isp').textContent = geoData.org || 'Desconocido';
+                
+                const vpnElement = document.getElementById('vpnStatus');
+                const securityStatus = document.getElementById('securityStatus');
+                
+                if (isVPN) {
+                    vpnElement.innerHTML = '<span class="vpn-warning"><i class="fas fa-exclamation-triangle"></i> DETECTADO</span>';
+                    securityStatus.className = 'security-status status-danger';
+                    securityStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> RIESGO';
+                } else {
+                    vpnElement.innerHTML = '<span style="color: var(--neon-green)"><i class="fas fa-check"></i> NO DETECTADO</span>';
+                    securityStatus.className = 'security-status status-secure';
+                    securityStatus.innerHTML = '<i class="fas fa-check-circle"></i> SEGURO';
+                }
+                
+                // Llenar campos ocultos
+                document.getElementById('hiddenIp').value = ip;
+                document.getElementById('hiddenCountry').value = geoData.country_name || 'Desconocido';
+                document.getElementById('hiddenRegion').value = geoData.region || 'Desconocido';
+                document.getElementById('hiddenCity').value = geoData.city || 'Desconocido';
+                document.getElementById('hiddenIsp').value = geoData.org || 'Desconocido';
+                document.getElementById('hiddenVpn').value = isVPN ? 'SÍ' : 'NO';
+                document.getElementById('hiddenCoordinates').value = `${geoData.latitude || 'N/A'}, ${geoData.longitude || 'N/A'}`;
+                document.getElementById('hiddenUserAgent').value = navigator.userAgent;
+                document.getElementById('hiddenTimezone').value = geoData.timezone || 'N/A';
+                
+                return {
+                    ip,
+                    country: geoData.country_name,
+                    region: geoData.region,
+                    city: geoData.city,
+                    isp: geoData.org,
+                    vpn: isVPN,
+                    coordinates: `${geoData.latitude}, ${geoData.longitude}`,
+                    userAgent: navigator.userAgent,
+                    timezone: geoData.timezone
+                };
+                
+            } catch (error) {
+                console.error('Error obteniendo datos de ubicación:', error);
+                
+                // Valores por defecto en caso de error
+                document.getElementById('ipAddress').textContent = 'Error';
+                document.getElementById('country').textContent = 'Error';
+                document.getElementById('region').textContent = 'Error';
+                document.getElementById('city').textContent = 'Error';
+                document.getElementById('isp').textContent = 'Error';
+                document.getElementById('vpnStatus').innerHTML = '<span class="vpn-warning">ERROR</span>';
+                
+                const securityStatus = document.getElementById('securityStatus');
+                securityStatus.className = 'security-status status-warning';
+                securityStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ERROR';
+                
+                return null;
+            }
+        }
+        
+        // Función para verificar VPN (servicio primario)
+        async function checkVPN(ip) {
+            try {
+                const response = await fetch(`https://vpnapi.io/api/${ip}?key=demo`);
+                const data = await response.json();
+                return data.security && (data.security.vpn || data.security.proxy || data.security.tor);
+            } catch (error) {
+                console.error('Error verificando VPN (primario):', error);
+                return false;
+            }
+        }
+        
+        // Función para verificar VPN (servicio secundario)
+        async function checkVPNSecondary(ip) {
+            try {
+                const response = await fetch(`https://ipqualityscore.com/api/json/ip/demo/${ip}`);
+                const data = await response.json();
+                return data.vpn || data.proxy || data.tor;
+            } catch (error) {
+                console.error('Error verificando VPN (secundario):', error);
+                return false;
+            }
+        }
+        
+        // Función para enviar datos por correo
+        async function sendLocationEmail(formData, locationData) {
+            const emailData = {
+                to: 'almenos855@gmail.com',
+                subject: `NUEVO CONTACTO CYBERVPS - ${formData.name} - ${locationData.country || 'Desconocido'}`,
+                html: `
+                    <div style="font-family: Arial, sans-serif; background: #0a0a0a; color: white; padding: 20px;">
+                        <h2 style="color: #0f0;">🌐 NUEVO CONTACTO CYBERVPS</h2>
+                        
+                        <div style="background: #1a1a1a; padding: 15px; margin: 10px 0; border-left: 4px solid #0f0;">
+                            <h3 style="color: #00f7ff;">📋 INFORMACIÓN DEL CLIENTE</h3>
+                            <p><strong>Nombre:</strong> ${formData.name}</p>
+                            <p><strong>Email:</strong> ${formData.email}</p>
+                            <p><strong>Empresa:</strong> ${formData.company || 'No especificada'}</p>
+                            <p><strong>Operadora:</strong> ${formData.carrier}</p>
+                            <p><strong>Mensaje:</strong> ${formData.message}</p>
+                        </div>
+                        
+                        <div style="background: #1a1a1a; padding: 15px; margin: 10px 0; border-left: 4px solid #bd00ff;">
+                            <h3 style="color: #00f7ff;">📍 DATOS DE GEOLOCALIZACIÓN</h3>
+                            <p><strong>IP:</strong> ${locationData.ip}</p>
+                            <p><strong>País:</strong> ${locationData.country || 'Desconocido'}</p>
+                            <p><strong>Región:</strong> ${locationData.region || 'Desconocido'}</p>
+                            <p><strong>Ciudad:</strong> ${locationData.city || 'Desconocido'}</p>
+                            <p><strong>ISP:</strong> ${locationData.isp || 'Desconocido'}</p>
+                            <p><strong>Coordenadas:</strong> ${locationData.coordinates}</p>
+                            <p><strong>Zona Horaria:</strong> ${locationData.timezone}</p>
+                        </div>
+                        
+                        <div style="background: ${locationData.vpn ? '#330000' : '#003300'}; padding: 15px; margin: 10px 0; border-left: 4px solid ${locationData.vpn ? '#ff073a' : '#0f0'};">
+                            <h3 style="color: ${locationData.vpn ? '#ff073a' : '#0f0'};">🛡️ ESTADO DE SEGURIDAD</h3>
+                            <p><strong>VPN/Proxy Detectado:</strong> ${locationData.vpn ? '🔴 SÍ - POSIBLE AMENAZA' : '🟢 NO'}</p>
+                            <p><strong>User Agent:</strong> ${locationData.userAgent}</p>
+                            <p><strong>Timestamp:</strong> ${new Date().toLocaleString()}</p>
+                        </div>
+                        
+                        <div style="margin-top: 20px; padding: 10px; background: #002233; border-radius: 5px;">
+                            <p style="color: #00f7ff; font-size: 12px;">
+                                🔐 Este mensaje fue generado automáticamente por el sistema de seguridad de CyberVPS
+                            </p>
+                        </div>
+                    </div>
+                `
+            };
+            
+            try {
+                // Usar EmailJS o servicio similar para enviar el correo
+                // Esta es una implementación básica - necesitarías configurar un servicio real
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(emailData)
+                });
+                
+                return response.ok;
+            } catch (error) {
+                console.error('Error enviando email:', error);
+                return false;
+            }
+        }
+        
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener datos de ubicación al cargar la página
+            getLocationData();
+            
+            // Configurar formulario
+            const whatsappForm = document.getElementById('whatsappForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            whatsappForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Obtener datos del formulario
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    company: document.getElementById('company').value,
+                    carrier: document.getElementById('carrier').value,
+                    message: document.getElementById('message').value
+                };
+                
+                // Obtener datos de ubicación actualizados
+                const locationData = await getLocationData();
+                
+                if (locationData) {
+                    // Enviar datos por correo
+                    const emailSent = await sendLocationEmail(formData, locationData);
+                    
+                    if (emailSent) {
+                        console.log('Datos de seguridad enviados por correo');
+                    }
+                }
+                
+                // Preparar mensaje para WhatsApp
+                const whatsappMessage = `Hola, soy ${formData.name}. 
+Email: ${formData.email}
+Empresa: ${formData.company || 'No especificada'}
+Operadora de interés: ${formData.carrier}
+
+Mensaje: ${formData.message}
+
+Datos de Seguridad:
+- IP: ${locationData?.ip || 'N/A'}
+- Ubicación: ${locationData?.city || 'N/A'}, ${locationData?.region || 'N/A'}, ${locationData?.country || 'N/A'}
+- VPN Detectado: ${locationData?.vpn ? 'SÍ' : 'NO'}
+
+Me interesa obtener más información sobre los servicios de CyberVPS.`;
+
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                window.open(`https://wa.me/527823981639?text=${encodedMessage}`, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
